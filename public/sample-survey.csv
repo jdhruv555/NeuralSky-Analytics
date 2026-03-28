@@ -1,0 +1,4 @@
+observation_id,timestamp,ra,dec,brightness,flux,signal_to_noise,wavelength,exposure_time,source_type,telescope_id,anomaly_score,confidence
+SMP-90001,2026-03-20T14:22:00.000Z,125.4,-32.1,14.2,2.1,18.5,620,180,Transient Event,VLT-UT4,0.82,0.91
+SMP-90002,2026-03-20T15:01:00.000Z,128.1,-31.8,15.0,1.1,12.0,550,120,Galaxy,Keck-II,0.12,0.62
+SMP-90003,2026-03-21T02:15:00.000Z,201.0,44.5,13.8,4.6,35.2,480,240,Candidate Anomaly,Gemini-N,0.95,0.88

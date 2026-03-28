@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -16,9 +15,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={inter.variable}>
       <body className="bg-[#070b14] text-slate-200 antialiased">
-        <Navigation />
-        <main className="page-transition">{children}</main>
-        <Footer />
+        {children}
+        <Toaster
+          theme="dark"
+          position="top-right"
+          toastOptions={{
+            classNames: {
+              toast: "bg-[#0c1222]/95 border border-cyan-500/20 text-slate-100 backdrop-blur-xl",
+            },
+          }}
+        />
       </body>
     </html>
   );

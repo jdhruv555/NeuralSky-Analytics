@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,9 +17,10 @@ export default function Navigation() {
   }, []);
 
   const links = [
-    { href: "/", label: "Platform" },
+    { href: "/", label: "Home" },
     { href: "/technology", label: "Technology" },
-    { href: "/about", label: "About" },
+    { href: "/product", label: "Product" },
+    { href: "/about", label: "About Us" },
   ];
 
   return (
@@ -52,14 +53,19 @@ export default function Navigation() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
+          {links.map((l) => {
+            const active =
+              l.href === "/"
+                ? pathname === "/"
+                : pathname === l.href || pathname.startsWith(`${l.href}/`);
+            return (
             <Link key={l.href} href={l.href}
-              className={`text-sm font-medium transition-colors relative group ${pathname === l.href ? "text-white" : "text-neutral-400 hover:text-white"}`}
+              className={`text-sm font-medium transition-colors relative group ${active ? "text-white" : "text-neutral-400 hover:text-white"}`}
             >
               {l.label}
-              <span className={`absolute -bottom-0.5 left-0 h-px bg-[#FF5500] transition-all duration-300 ${pathname === l.href ? "w-full" : "w-0 group-hover:w-full"}`} />
+              <span className={`absolute -bottom-0.5 left-0 h-px bg-[#FF5500] transition-all duration-300 ${active ? "w-full" : "w-0 group-hover:w-full"}`} />
             </Link>
-          ))}
+          );})}
         </nav>
 
         <div className="hidden md:block">

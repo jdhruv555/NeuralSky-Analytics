@@ -15,7 +15,7 @@ export default function Footer() {
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          {[["Platform","/"],["Technology","/technology"],["About","/about"]].map(([l,h]) => (
+          {[["Home","/"],["Technology","/technology"],["Product","/product"],["About Us","/about"]].map(([l,h]) => (
             <Link key={h} href={h} style={{ fontSize: 12, color: "#6b7280", textDecoration: "none" }}>{l}</Link>
           ))}
         </div>
