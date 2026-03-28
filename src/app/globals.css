@@ -103,34 +103,27 @@ body {
 .animate-spin-rev { animation: spin-rev 20s linear infinite; }
 .animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
 
-/* Product workspace — cyan / indigo / violet accents */
+/* Product workspace — neutral base, restrained accent */
 .product-shell {
   min-height: 100vh;
-  background:
-    radial-gradient(ellipse 120% 80% at 10% -10%, rgba(6, 182, 212, 0.12), transparent 50%),
-    radial-gradient(ellipse 80% 60% at 90% 0%, rgba(99, 102, 241, 0.1), transparent 45%),
-    linear-gradient(180deg, #050810 0%, #070b14 40%, #060912 100%);
+  background: linear-gradient(180deg, #070a10 0%, #080c14 50%, #070a10 100%);
 }
 
 .product-glass {
-  background: rgba(12, 18, 34, 0.72);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(148, 163, 184, 0.08);
-  box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.04) inset;
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(51, 65, 85, 0.45);
 }
 
 .product-glass-strong {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(34, 211, 238, 0.12);
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.55);
 }
 
 .product-grid-bg {
-  background-image:
-    linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background-image: none;
 }
 
 .text-product-cyan { color: #22d3ee; }

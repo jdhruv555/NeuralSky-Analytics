@@ -1,5 +1,6 @@
 "use client";
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 
 export default function TeamSection() {
@@ -22,14 +23,25 @@ export default function TeamSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           style={{ width: "100%", borderRadius: 24, padding: "48px 40px", display: "flex", flexDirection: "column", alignItems: "center", background: "#111118", border: "1px solid rgba(255,85,0,0.15)" }}>
 
-          <div style={{ width: 80, height: 80, borderRadius: 20, marginBottom: 20, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg, rgba(255,85,0,0.18), rgba(255,140,0,0.06))", border: "2px solid rgba(255,85,0,0.25)" }}>
-            <svg viewBox="0 0 48 48" fill="none" style={{ width: 44, height: 44 }}>
-              <circle cx="24" cy="18" r="9" stroke="#FF5500" strokeWidth="1.5"/>
-              <path d="M24 10v-3M24 30v3M17 18H14M34 18h3" stroke="#FF5500" strokeWidth="1.5" strokeLinecap="round" opacity="0.7"/>
-              <circle cx="24" cy="18" r="3.5" fill="#FF5500" opacity="0.25"/>
-              <circle cx="24" cy="18" r="1.5" fill="#FF5500"/>
-              <path d="M11 38c0-7.2 5.8-13 13-13s13 5.8 13 13" stroke="#FF5500" strokeWidth="1.5" strokeLinecap="round" opacity="0.25"/>
-            </svg>
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 220,
+              marginBottom: 24,
+              borderRadius: 16,
+              overflow: "hidden",
+              background: "#000",
+              border: "1px solid rgba(255,85,0,0.2)",
+            }}
+          >
+            <Image
+              src="/neuralsky-logo.png"
+              alt="NeuralSky logo"
+              width={440}
+              height={520}
+              style={{ width: "100%", height: "auto", display: "block", objectFit: "contain" }}
+              sizes="220px"
+            />
           </div>
 
           <h3 style={{ fontSize: 26, fontWeight: 900, color: "white", marginBottom: 4 }}>Dhruv Jha</h3>

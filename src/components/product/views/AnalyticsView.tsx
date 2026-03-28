@@ -17,6 +17,7 @@ import {
 } from "recharts";
 import { useProductStore } from "@/store/useProductStore";
 import { ProductCard } from "@/components/product/ui/Card";
+import { CHART, chartTooltipStyle } from "@/lib/product/chart-theme";
 
 export default function AnalyticsView() {
   const observations = useProductStore((s) => s.observations);
@@ -88,14 +89,14 @@ export default function AnalyticsView() {
   }, [byTime, anomalies]);
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+    <div className="mx-auto max-w-6xl space-y-10 pb-20">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-cyan-500/80 font-semibold">Analytics</p>
-          <h2 className="text-2xl font-semibold text-white mt-1">Signal analytics</h2>
+          <h2 className="text-xl font-semibold text-slate-100">Signal analytics</h2>
+          <p className="mt-1 text-sm text-slate-500">Distributions and relationships from the current filter.</p>
         </div>
         <select
-          className="bg-[#0c1222] border border-white/10 rounded-lg px-3 py-2 text-xs max-w-xs"
+          className="max-w-xs rounded-md border border-slate-700/80 bg-slate-950/50 px-3 py-2 text-xs text-slate-200"
           value={tel}
           onChange={(e) => setTel(e.target.value)}
         >
@@ -108,93 +109,93 @@ export default function AnalyticsView() {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <ProductCard glow>
-          <p className="text-sm font-medium text-white mb-3">Anomaly score distribution</p>
-          <div className="h-[240px]">
+      <div className="grid grid-cols-1 gap-10 xl:grid-cols-2">
+        <ProductCard>
+          <p className="mb-3 text-sm font-medium text-slate-200">Anomaly score distribution</p>
+          <div className="h-[260px] min-w-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={scoreDist}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="bin" stroke="#64748b" fontSize={10} />
-                <YAxis stroke="#64748b" fontSize={10} />
-                <Tooltip contentStyle={{ background: "#0f172a", border: "1px solid rgba(34,211,238,0.2)" }} />
-                <Bar dataKey="count" fill="#22d3ee" radius={[4, 4, 0, 0]} />
+                <CartesianGrid stroke={CHART.grid} strokeDasharray="4 4" vertical={false} />
+                <XAxis dataKey="bin" tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} />
+                <YAxis tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} width={32} />
+                <Tooltip contentStyle={chartTooltipStyle} />
+                <Bar dataKey="count" fill={CHART.primary} radius={[4, 4, 0, 0]} maxBarSize={40} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </ProductCard>
 
-        <ProductCard glow>
-          <p className="text-sm font-medium text-white mb-3">Brightness vs flux</p>
-          <div className="h-[240px]">
+        <ProductCard>
+          <p className="mb-3 text-sm font-medium text-slate-200">Brightness vs flux</p>
+          <div className="h-[260px] min-w-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis type="number" dataKey="x" name="Brightness" stroke="#64748b" fontSize={10} />
-                <YAxis type="number" dataKey="y" name="Flux" stroke="#64748b" fontSize={10} />
+                <CartesianGrid stroke={CHART.grid} strokeDasharray="4 4" />
+                <XAxis type="number" dataKey="x" name="Brightness" tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} />
+                <YAxis type="number" dataKey="y" name="Flux" tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} />
                 <ZAxis type="number" dataKey="z" range={[20, 400]} />
-                <Tooltip cursor={{ strokeDasharray: "3 3" }} contentStyle={{ background: "#0f172a", border: "1px solid rgba(167,139,250,0.25)" }} />
-                <Scatter name="Obs" data={scatter} fill="#a78bfa" />
+                <Tooltip cursor={{ strokeDasharray: "3 3" }} contentStyle={chartTooltipStyle} />
+                <Scatter name="Observations" data={scatter} fill={CHART.secondaryStroke} />
               </ScatterChart>
             </ResponsiveContainer>
           </div>
         </ProductCard>
 
-        <ProductCard glow>
-          <p className="text-sm font-medium text-white mb-3">Detections over time</p>
-          <div className="h-[240px]">
+        <ProductCard>
+          <p className="mb-3 text-sm font-medium text-slate-200">Detections over time</p>
+          <div className="h-[260px] min-w-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={byTime}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="day" stroke="#64748b" fontSize={10} />
-                <YAxis stroke="#64748b" fontSize={10} />
-                <Tooltip contentStyle={{ background: "#0f172a", border: "1px solid rgba(34,211,238,0.2)" }} />
-                <Bar dataKey="c" fill="#6366f1" radius={[4, 4, 0, 0]} name="Detections" />
+                <CartesianGrid stroke={CHART.grid} strokeDasharray="4 4" vertical={false} />
+                <XAxis dataKey="day" tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} />
+                <YAxis tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} width={32} />
+                <Tooltip contentStyle={chartTooltipStyle} />
+                <Bar dataKey="c" fill={CHART.accent} radius={[4, 4, 0, 0]} name="Detections" maxBarSize={40} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </ProductCard>
 
-        <ProductCard glow>
-          <p className="text-sm font-medium text-white mb-3">Source type breakdown</p>
-          <div className="h-[240px]">
+        <ProductCard>
+          <p className="mb-3 text-sm font-medium text-slate-200">Source type breakdown</p>
+          <div className="h-[260px] min-w-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={sourceBreak} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis type="number" stroke="#64748b" fontSize={10} />
-                <YAxis type="category" dataKey="name" width={120} stroke="#64748b" fontSize={9} />
-                <Tooltip contentStyle={{ background: "#0f172a", border: "1px solid rgba(255,255,255,0.08)" }} />
-                <Bar dataKey="value" fill="#34d399" radius={[0, 4, 4, 0]} />
+                <CartesianGrid stroke={CHART.grid} strokeDasharray="4 4" horizontal={false} />
+                <XAxis type="number" tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} />
+                <YAxis type="category" dataKey="name" width={120} tick={{ fill: CHART.axis, fontSize: 9 }} tickLine={false} axisLine={{ stroke: CHART.grid }} />
+                <Tooltip contentStyle={chartTooltipStyle} />
+                <Bar dataKey="value" fill={CHART.secondary} radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </ProductCard>
 
-        <ProductCard glow>
-          <p className="text-sm font-medium text-white mb-3">Signal-to-noise histogram</p>
-          <div className="h-[240px]">
+        <ProductCard>
+          <p className="mb-3 text-sm font-medium text-slate-200">Signal-to-noise histogram</p>
+          <div className="h-[260px] min-w-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={snHist}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="range" stroke="#64748b" fontSize={10} />
-                <YAxis stroke="#64748b" fontSize={10} />
-                <Tooltip contentStyle={{ background: "#0f172a", border: "1px solid rgba(34,211,238,0.2)" }} />
-                <Bar dataKey="count" fill="#fbbf24" radius={[4, 4, 0, 0]} />
+                <CartesianGrid stroke={CHART.grid} strokeDasharray="4 4" vertical={false} />
+                <XAxis dataKey="range" tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} />
+                <YAxis tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} width={32} />
+                <Tooltip contentStyle={chartTooltipStyle} />
+                <Bar dataKey="count" fill={CHART.primary} opacity={0.85} radius={[4, 4, 0, 0]} maxBarSize={40} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </ProductCard>
 
-        <ProductCard glow>
-          <p className="text-sm font-medium text-white mb-3">Confidence trend (indexed)</p>
-          <div className="h-[240px]">
+        <ProductCard>
+          <p className="mb-3 text-sm font-medium text-slate-200">Confidence trend (indexed)</p>
+          <div className="h-[260px] min-w-0 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={confTrend}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="day" stroke="#64748b" fontSize={10} />
-                <YAxis stroke="#64748b" fontSize={10} />
-                <Tooltip contentStyle={{ background: "#0f172a", border: "1px solid rgba(34,211,238,0.2)" }} />
-                <Line type="monotone" dataKey="conf" stroke="#f472b6" strokeWidth={2} dot={false} name="Confidence" />
+                <CartesianGrid stroke={CHART.grid} strokeDasharray="4 4" vertical={false} />
+                <XAxis dataKey="day" tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} />
+                <YAxis tick={{ fill: CHART.axis, fontSize: CHART.tick }} tickLine={false} axisLine={{ stroke: CHART.grid }} width={36} />
+                <Tooltip contentStyle={chartTooltipStyle} />
+                <Line type="monotone" dataKey="conf" stroke={CHART.accent} strokeWidth={2} dot={false} name="Confidence" />
               </LineChart>
             </ResponsiveContainer>
           </div>

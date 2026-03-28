@@ -14,8 +14,8 @@ export function ProductCard({
   return (
     <div
       className={cn(
-        "product-glass rounded-xl p-4",
-        glow && "border-product-glow",
+        "product-glass rounded-lg p-4",
+        glow && "border-slate-600/30 shadow-sm shadow-black/20",
         className,
       )}
     >

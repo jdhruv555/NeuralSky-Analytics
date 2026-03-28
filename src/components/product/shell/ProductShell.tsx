@@ -1,39 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import {
-  Activity,
-  AlertTriangle,
-  BarChart3,
-  Compass,
-  FolderKanban,
-  Home,
-  Layers,
-  LineChart,
-  Map,
-  Settings,
-  Upload,
-  ClipboardList,
-  Sparkles,
-  LogOut,
-} from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ProductButton } from "@/components/product/ui/Button";
 import { getClientSessionMock } from "@/lib/auth/placeholder";
 
 const nav = [
-  { href: "/product", label: "Overview", icon: Home },
-  { href: "/product/upload", label: "Survey Upload", icon: Upload },
-  { href: "/product/explorer", label: "Observation Explorer", icon: Compass },
-  { href: "/product/anomalies", label: "Anomaly Center", icon: AlertTriangle },
-  { href: "/product/analytics", label: "Signal Analytics", icon: LineChart },
-  { href: "/product/sky-map", label: "Sky Map", icon: Map },
-  { href: "/product/review", label: "Review Queue", icon: ClipboardList },
-  { href: "/product/projects", label: "Projects & Runs", icon: FolderKanban },
-  { href: "/product/reports", label: "Reports & Export", icon: BarChart3 },
-  { href: "/product/settings", label: "Settings", icon: Settings },
+  { href: "/product", label: "Overview" },
+  { href: "/product/upload", label: "Survey upload" },
+  { href: "/product/explorer", label: "Observation explorer" },
+  { href: "/product/anomalies", label: "Anomaly center" },
+  { href: "/product/analytics", label: "Signal analytics" },
+  { href: "/product/sky-map", label: "Sky map" },
+  { href: "/product/review", label: "Review queue" },
+  { href: "/product/projects", label: "Projects & runs" },
+  { href: "/product/reports", label: "Reports & export" },
+  { href: "/product/settings", label: "Settings" },
 ];
 
 export default function ProductShell({ children }: { children: React.ReactNode }) {
@@ -41,113 +24,97 @@ export default function ProductShell({ children }: { children: React.ReactNode }
   const session = getClientSessionMock();
 
   return (
-    <div className="product-shell product-grid-bg flex min-h-screen text-slate-200">
-      <aside className="hidden lg:flex w-[260px] flex-col border-r border-white/[0.06] bg-[#060a12]/90 backdrop-blur-xl">
-        <div className="p-5 border-b border-white/[0.06]">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-cyan-400/90 font-bold">
-                NeuralSky
-              </p>
-              <p className="text-sm font-semibold text-white tracking-tight">Product</p>
-            </div>
+    <div className="product-shell flex min-h-screen text-slate-200">
+      <aside className="hidden w-[220px] shrink-0 flex-col border-r border-slate-800/90 bg-[#0a0e14] lg:flex">
+        <div className="border-b border-slate-800/90 p-5">
+          <Link href="/" className="block space-y-2">
+            <Image
+              src="/neuralsky-logo.png"
+              alt="NeuralSky"
+              width={160}
+              height={48}
+              className="h-10 w-auto object-left object-contain"
+            />
+            <span className="block text-xs font-medium text-slate-500">Product workspace</span>
           </Link>
-          <p className="mt-3 text-[11px] text-slate-500 leading-relaxed">
-            Space data analytics · Surveys · Anomaly detection
-          </p>
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
+        <nav className="flex-1 space-y-0.5 overflow-y-auto px-2 py-3">
           {nav.map((item) => {
             const active =
               item.href === "/product"
                 ? pathname === "/product"
                 : pathname === item.href || pathname.startsWith(`${item.href}/`);
-            const Icon = item.icon;
             return (
-              <Link key={item.href} href={item.href}>
-                <motion.div
-                  whileHover={{ x: 2 }}
-                  className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors",
-                    active
-                      ? "bg-cyan-500/10 text-cyan-100 border border-cyan-500/25 shadow-[0_0_20px_rgba(34,211,238,0.08)]"
-                      : "text-slate-400 hover:text-white hover:bg-white/[0.04]",
-                  )}
-                >
-                  <Icon className={cn("w-4 h-4 shrink-0", active && "text-cyan-300")} />
-                  <span className="font-medium">{item.label}</span>
-                  {active && (
-                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse-dot" />
-                  )}
-                </motion.div>
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "block rounded-md px-3 py-2 text-[13px] transition-colors",
+                  active
+                    ? "bg-slate-800/80 text-slate-100"
+                    : "text-slate-500 hover:bg-slate-900/80 hover:text-slate-200",
+                )}
+              >
+                {item.label}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-white/[0.06] space-y-3">
-          <div className="product-glass rounded-lg p-3">
-            <p className="text-[10px] uppercase tracking-wider text-slate-500">Workspace</p>
-            <p className="text-xs font-medium text-slate-200 truncate">{session.workspaceId}</p>
-            <p className="text-[11px] text-slate-500 mt-1">{session.name}</p>
+        <div className="border-t border-slate-800/90 p-4 space-y-3 text-xs text-slate-500">
+          <div>
+            <p className="text-[10px] uppercase tracking-wider text-slate-600">Workspace</p>
+            <p className="mt-0.5 truncate text-slate-400">{session.workspaceId}</p>
+            <p className="mt-1 truncate">{session.name}</p>
           </div>
-          <div className="flex gap-2">
-            <Link href="/" className="flex-1">
-              <ProductButton variant="secondary" className="w-full text-xs py-2">
-                <Layers className="w-3.5 h-3.5" /> Site
-              </ProductButton>
-            </Link>
-            <ProductButton variant="ghost" className="px-2 py-2" title="Sign out (demo)">
-              <LogOut className="w-4 h-4 opacity-60" />
-            </ProductButton>
-          </div>
+          <Link
+            href="/"
+            className="block w-full rounded-md border border-slate-700/80 py-2 text-center text-slate-400 transition-colors hover:border-slate-600 hover:text-slate-200"
+          >
+            Marketing site
+          </Link>
         </div>
       </aside>
 
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-[#050810]/80 backdrop-blur-xl">
-          <div className="flex items-center justify-between gap-4 px-4 lg:px-8 py-3">
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="sticky top-0 z-40 border-b border-slate-800/90 bg-[#070a10]/95 backdrop-blur-md">
+          <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3.5 lg:px-8">
             <div className="min-w-0">
-              <p className="text-[10px] uppercase tracking-[0.25em] text-cyan-500/90 font-bold">
-                NeuralSky Product
-              </p>
-              <h1 className="text-lg font-semibold text-white truncate">
-                Space Data Analytics · Telescopic Surveys & Anomaly Detection
+              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-slate-600">Product</p>
+              <h1 className="mt-0.5 text-base font-semibold text-slate-100 lg:text-[15px]">
+                Space data analytics
               </h1>
             </div>
-            <div className="hidden sm:flex items-center gap-3">
-              <div className="flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-                </span>
-                <span className="text-xs text-emerald-200/90">Feeds healthy</span>
-              </div>
-              <ProductButton variant="secondary" className="text-xs py-2">
-                <Activity className="w-3.5 h-3.5" /> Quick run
-              </ProductButton>
+            <div className="flex items-center gap-3 text-xs text-slate-500">
+              <span className="hidden sm:inline">Feeds operational</span>
+              <span
+                className="hidden h-1.5 w-1.5 rounded-full bg-emerald-500/90 sm:inline"
+                aria-hidden
+              />
             </div>
           </div>
         </header>
 
-        <div className="flex-1 overflow-auto p-4 lg:p-8">{children}</div>
+        <div className="flex-1 overflow-auto px-4 py-8 lg:px-10">{children}</div>
       </div>
 
-      {/* Mobile bottom nav */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-white/10 bg-[#050810]/95 backdrop-blur-xl flex justify-around py-2 px-1 safe-area-pb">
-        {nav.slice(0, 5).map((item) => {
-          const active = pathname === item.href;
-          const Icon = item.icon;
+      <div className="fixed bottom-0 left-0 right-0 z-40 flex justify-around border-t border-slate-800/90 bg-[#070a10]/98 py-2 text-[10px] text-slate-500 backdrop-blur-md lg:hidden">
+        {nav.slice(0, 6).map((item) => {
+          const active =
+            item.href === "/product"
+              ? pathname === "/product"
+              : pathname === item.href || pathname.startsWith(`${item.href}/`);
           return (
-            <Link key={item.href} href={item.href} className="flex flex-col items-center gap-0.5 min-w-0 flex-1">
-              <Icon className={cn("w-5 h-5", active ? "text-cyan-400" : "text-slate-500")} />
-              <span className={cn("text-[9px] truncate", active ? "text-cyan-200" : "text-slate-500")}>
-                {item.label.split(" ")[0]}
-              </span>
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "max-w-[20%] truncate px-1 py-1 text-center",
+                active ? "text-slate-200" : "text-slate-600",
+              )}
+            >
+              {item.label.split(" ")[0]}
             </Link>
           );
         })}
